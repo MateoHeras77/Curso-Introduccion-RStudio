@@ -91,13 +91,48 @@ text(p$mids, p$density, labels = round(p$density,3), adj = c(0.5,-0.5), cex=.5)
 
 #Diagrama de Cajas: BOXPLOT
 ?boxplot
+attach(CPS1985)
+names(CPS1985)
+p <-boxplot(wage,
+        main = "Salario",
+        ylab = "Salario",
+        col = "green",
+        border = "blue")
+summary(wage)
+p
+
+p <- boxplot(wage ~ gender,
+        main = "Salario",
+        ylab = "Salario",
+        col = "green",
+        names = c("Hombres", "Mujeres"),
+        border = "blue")
+p
+length(p$out) == length(p$group)
+max(p$out[8:length(p$out)])
 
 
+#Subconjuntos
+
+Dat_Muj <- subset(CPS1985 , gender == "female")
+Dat_Hom <- subset(CPS1985 , gender == "male")
 
 
+boxplot(wage ~ gender,
+        horizontal = TRUE , #Orientacion del Grafico
+        notch = TRUE,
+        main = "Salario",
+        ylab = "Salario",
+        #col = "green",
+        names = c("Hombres", "Mujeres"),
+        border = "blue",
+        col = rainbow(12, alpha = 0.6))
 
+points(mean(Dat_Muj$wage),2, pch=25 , bg ="red", cex =1.5)
+points(mean(Dat_Hom$wage),1, pch=25 , bg ="yellow", cex =1.5)
 
-
+#Varias Segmentaciones
+boxplot(wage ~ gender*occupation)
 
 
 
