@@ -54,8 +54,31 @@ abline(regress, lty =1,lwd=2, col="dark blue")
 
 summary(regress)
 
-#tappli, sapply, lapply
+#tapply, sapply, lapply
 
+data(attenu)
+
+#sapply (Brinda informacion como arreglo)
+
+sapply(attenu, class)
+str(attenu)
+unique(attenu$station)
+
+sapply(attenu, function(x) sum(is.na(x))) # Stattion tiene 16 valores faltantes
+sapply(attenu, function(x) sum(x==0)) 
+sapply(attenu, function(x) sum(x==0 , na.rm = T)) #Valores faltantes ; No hay valores nulos
+
+#tapply : me ayuda a sacar estadisticos con respecto a varias variables 
+#(Brinda informacion como DataFrame)
+unique(attenu$event)
+tapply(X=attenu$dist, INDEX = attenu$event, FUN= mean) # Media de la dis por cada evento (solo mayusculas)
+tapply(attenu$dist, attenu$station, FUN = mean) #Por default omite los NA
+
+#lapply: (Brinda informacion como Lista)
+lapply(X=attenu$dist, INDEX = attenu$event, FUN= mean) # Media de la dis por cada evento (solo mayusculas)
+lista <-lapply(X = attenu, function(x) sum(is.na(x)))
+unlist(lista) -> lista
+lista
 
 
 
